@@ -21,7 +21,6 @@ class SecondActivity : AppCompatActivity() {
         editTextTask = findViewById(R.id.etTask)
         btnSave = findViewById(R.id.btnAddTask)
 
-        // Verificar si estamos editando una tarea existente
         val bundle = intent.extras
         if (bundle != null) {
             taskId = bundle.getLong("taskId", -1)

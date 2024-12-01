@@ -23,7 +23,6 @@ class MyAdapter(
         val item = items[position]
         holder.tvTask.text = item.task
 
-        // Configurar menú contextual
         holder.cardView.setOnCreateContextMenuListener { menu, v, menuInfo ->
             val editItem = menu.add(Menu.NONE, 1, 1, "Edit")
             editItem.setOnMenuItemClickListener {
@@ -37,7 +36,6 @@ class MyAdapter(
             }
         }
 
-        // Configurar listener para mostrar el menú contextual
         holder.cardView.setOnLongClickListener {
             holder.cardView.showContextMenu()
             true

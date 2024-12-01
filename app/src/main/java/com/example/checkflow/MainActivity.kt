@@ -39,13 +39,10 @@ class MainActivity : AppCompatActivity() {
         adapter = MyAdapter(items, { task, action -> handleTaskAction(task, action) })
         recyclerView.adapter = adapter
 
-        // Inicialmente hacer el RecyclerView invisible
         recyclerView.visibility = if (items.isEmpty()) View.GONE else View.VISIBLE
 
-        // Obtener el DAO de la base de datos
         taskDao = AppDatabase.getDatabase(this).taskDao()
 
-        // Cargar las tareas desde la base de datos
         CoroutineScope(Dispatchers.IO).launch {
             val tasks = taskDao.getAllTasks()
             runOnUiThread {
@@ -99,23 +96,19 @@ class MainActivity : AppCompatActivity() {
     private fun handleTaskAction(task: MyItem, action: String) {
         when (action) {
             "update" -> {
-                // Lógica para actualizar la tarea
                 val intent = Intent(this, SecondActivity::class.java)
                 intent.putExtra("taskId", task.id)
                 intent.putExtra("taskText", task.task)
                 startActivityForResult(intent, 2)
             }
             "delete" -> {
-                // Desmarcar el CheckBox por defecto
                 val position = items.indexOf(task)
                 adapter.notifyItemChanged(position)
 
-                // Lógica para borrar la tarea con Snackbar
                 items.remove(task)
                 adapter.notifyItemRemoved(position)
                 checkEmpty()
 
-                // Mostrar Snackbar con UNDO
                 Snackbar.make(recyclerView, "TASK DELETED!", 6000)
                     .setAction("UNDO") {
                         // Reinserción de la tarea en la lista
@@ -128,7 +121,6 @@ class MainActivity : AppCompatActivity() {
                     }
                     .show()
 
-                // Borrar la tarea de la base de datos después del tiempo del Snackbar
                 handler.postDelayed({
                     CoroutineScope(Dispatchers.IO).launch {
                         taskDao.deleteTask(TaskEntity(task.id, task.task))
