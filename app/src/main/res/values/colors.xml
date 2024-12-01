@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray_background">#191a1f</color>
+    <color name="gray_cards">#262a35</color>
+    <color name="checked_color">#1BD99A</color>
+    <color name="unchecked_color">#0096FF</color>
 </resources>
